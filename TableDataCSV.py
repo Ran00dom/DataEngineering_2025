@@ -1,7 +1,6 @@
 
 import pandas as pd
 import numpy as np
-import datetime as dt
 
 class TableDataCSV:
 
@@ -27,7 +26,7 @@ class TableDataCSV:
 
     def __init__(self, json):
         self.data = pd.DataFrame(json)
-        self.result_data = None # итоговый DataFrame
+        self.result_data = pd.DataFrame() # итоговый DataFrame
         # проверка на наличие требуемых ключей json
         assert all(item in self.data.columns for item in self.DICTIONARY), f"Expecting json with correct dictionary columns"
         # соединяем столбцы с почасовыми и дневными данными
@@ -121,7 +120,9 @@ class TableDataCSV:
             return np.array(row[self.VALUE_COL]) # если нет возвращаем без изменений
 
     def print(self):
+        print(f'Result transforms >')
         print(self.result_data)
 
     def save_to_cvs(self, path):
-        self.result_data.to_csv(path)
+        print(f'TableDataCSV save to {path}')
+        self.result_data.to_csv(path, index_label=['name', self.VALUE_COL], header=True)
