@@ -12,8 +12,8 @@ from TableDataCSV import TableDataCSV
 
 requests = RequestsController(api_url)
 table = TableDataCSV(requests.getRequestJSON())
-#table.print_hi()
-
+table.print()
+table.save_to_cvs("table.csv")
 
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
