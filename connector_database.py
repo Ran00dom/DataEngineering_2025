@@ -2,24 +2,30 @@
 
 import psycopg2
 from TableDataCSV import TableDataCSV
-from string import Template
+
+import logging
 
 class ConnectorPostgresSQL:
-    table = 'analytics_data'
-
+    TABLE_NAME = 'analytics_data'
     def __init__(self):
-        self.connect = psycopg2.connect(
-            host='localhost',
-            user='admin',
-            port=5432,
-            password='password',
-            database='analytics_db'
-        )
+        logging.basicConfig(level=logging.INFO)
+        self.logger = logging.getLogger(__name__)
+        try:
+            self.connect = psycopg2.connect(
+                host='localhost',
+                user='admin',
+                port=5432,
+                password='password',
+                database='analytics_db'
+            )
+            self.cursor = self.connect.cursor()
+            with open('init.sql', 'r') as sql_file:
+                self.cursor.execute(sql_file.read())
 
-        self.cursor = self.connect.cursor()
-        with open('init.sql', 'r') as sql_file:
-            self.cursor.execute(sql_file.read())
-
+        except psycopg2.OperationalError as e:
+            logging.error(e)
+        except FileNotFoundError as e:
+            logging.error(e)
 
     def insert_data(self, table):
         if isinstance(table, TableDataCSV):
@@ -30,7 +36,7 @@ class ConnectorPostgresSQL:
     def insert_sql(self, index, row):
         try:
             self.cursor.execute(
-                f'INSERT INTO {self.table} (value_name, value_array) VALUES (%s, %s)',
+                f'INSERT INTO {self.TABLE_NAME} (value_name, value_array) VALUES (%s, %s)',
                 (index, row[0].tolist())
             )
             self.connect.commit()

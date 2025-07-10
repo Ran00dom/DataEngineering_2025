@@ -1,3 +1,4 @@
+import logging
 
 import requests
 from requests.adapters import HTTPAdapter
@@ -12,9 +13,24 @@ class RequestsController:
         self.adapter = HTTPAdapter(max_retries=self.retry)
         self.session.mount('http://', self.adapter)
         self.session.mount('https://', self.adapter)
+        self.logger = logging.getLogger(__name__)
+        self.logger.setLevel(logging.INFO)
 
     def setUrl(self, url):
         self.url = url
 
     def getRequestJSON(self):
-        return self.session.get(self.url).json()
+        try:
+            return self.session.get(self.url).json()
+        except requests.exceptions.RequestException as e:
+            self.logger.error(f'Request Exception: {format(e)}')
+            return None
+        except Exception as e:
+            self.logger.error(f'Unexpected error: {format(e)}')
+            return None
+        except ValueError as e:
+            self.logger.error(f'Invalid JSON response: {format(e)}')
+            return None
+
+    def __del__(self):
+        self.session.close()

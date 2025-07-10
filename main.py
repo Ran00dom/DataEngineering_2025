@@ -10,14 +10,17 @@ weather_code,soil_temperature_0cm,soil_temperature_6cm,rain,showers,snowfall\
 from RequestsController import RequestsController
 from TableDataCSV import TableDataCSV
 from  connector_database import ConnectorPostgresSQL
+from app import App
 
-requests = RequestsController(api_url)
-table = TableDataCSV(requests.getRequestJSON())
-table.print()
-table.save_to_cvs("table.csv")
-database = ConnectorPostgresSQL()
-database.insert_data(table)
-input("press enter to exit")
+app = App(api_url=api_url)
+
+# requests = RequestsController(api_url)
+# table = TableDataCSV(requests.getRequestJSON())
+# table.print()
+# table.save_to_cvs("table.csv")
+# database = ConnectorPostgresSQL()
+# database.insert_data(table)
+# input("press enter to exit ")
 
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
