@@ -17,6 +17,7 @@ table.print()
 table.save_to_cvs("table.csv")
 database = ConnectorPostgresSQL()
 database.insert_data(table)
+input("press enter to exit")
 
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
