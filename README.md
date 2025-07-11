@@ -83,7 +83,3 @@ python main.py
 ![Работа авто-выгрузки](screenshots/auto_update.png)
 ---
 
-## Лицензия
-
-MIT © 2025
-
