@@ -7,20 +7,7 @@ eed_80m,wind_direction_10m,wind_direction_80m,visibility,evapotranspiration,\
 weather_code,soil_temperature_0cm,soil_temperature_6cm,rain,showers,snowfall\
 &timezone=auto&timeformat=unixtime&wind_speed_unit=kn&temperature_unit=fahrenheit&precipitation_unit=inch&start_date=2025-05-16&end_date=2025-05-30"""
 
-from RequestsController import RequestsController
-from TableDataCSV import TableDataCSV
-from  connector_database import ConnectorPostgresSQL
 from app import App
 
 app = App(api_url=api_url)
 
-# requests = RequestsController(api_url)
-# table = TableDataCSV(requests.getRequestJSON())
-# table.print()
-# table.save_to_cvs("table.csv")
-# database = ConnectorPostgresSQL()
-# database.insert_data(table)
-# input("press enter to exit ")
-
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/

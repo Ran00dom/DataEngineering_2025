@@ -5,5 +5,7 @@ CREATE TABLE IF NOT EXISTS analytics_data (
     value_array TEXT[]
 );
 
+DROP TABLE IF EXISTS analytics_data;
+
 
 
